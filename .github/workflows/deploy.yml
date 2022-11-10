@@ -1,4 +1,4 @@
-name: Next CI
+name: Deploy Next CI
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: mwo
+  AZURE_WEBAPP_NAME: mwolab
   AZURE_WEBAPP_PACKAGE_PATH: "mwo"
   NODE_VERSION: "18.x"
 
