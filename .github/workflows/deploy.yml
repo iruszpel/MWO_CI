@@ -1,7 +1,9 @@
 name: Deploy Next CI
 
 on:
-  pull_request:
+  push:
+    branches:
+      - main
 
 env:
   AZURE_WEBAPP_NAME: mwolab
