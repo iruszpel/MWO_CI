@@ -5,11 +5,13 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: mwolab
-  AZURE_WEBAPP_PACKAGE_PATH: "./mwo"
+  AZURE_WEBAPP_PACKAGE_PATH: "."
   NODE_VERSION: "18.x"
 
 jobs:
   main:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -18,11 +20,16 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install dependencies
-        working-directory: mwo
         run: npm ci
       - name: Build
-        working-directory: mwo
         run: npm run build
+      - name: "Automated Version Bump"
+        id: version-bump
+        uses: "phips28/gh-action-bump-version@master"
+        with:
+          tag-prefix: "v"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: "Deploy to Azure WebApp"
         uses: azure/webapps-deploy@v2
         with:
